@@ -39,7 +39,7 @@ Different channels of text color carry different information for the shader to r
 > **Blue:**  
   Stores gradient ID that will be applied to the text; new custom gradients could be easilly added, following the instructions on [how to make a custom gradient](./how_to_make_a_gradient.md)
 
-_Note: you can also apply the same things to the shadow of the text if you will get the HEX color, prepend to it FF to set the alpha to 255, and convert to decimal, so it can be used as `shadow_color`_.
+_Note: you can also apply the same things to the shadow of the text if you will get the HEX color, convert to RGB fractions and append 1 for the alpha value, so it can be used as `shadow_color`_.
 
 ### Text fonts
 
@@ -87,11 +87,11 @@ For the text lets be absolutely unbiased and pick "retitled titles." alongside w
 ### Combining
 
 So, here we have it:  
-Text color is `#258800` (all previosuly brought up `25`, `88`, `00` but without the `0x` part as obviously HEX codes are written in HEX and there is no need to indicate it any further), and Text shadow color is `0xFF25880A`, but we need to convert it to decimal so it's just `4280649738`, same thing but written differently.  
+Text color is `#258800` (all previosuly brought up `25`, `88`, `00` but without the `0x` part as obviously HEX codes are written in HEX and there is no need to indicate it any further), and Text shadow color is `0xFF25880A`, but we need to convert it to RGBA fractions so it's `[0.27058823529,0.53333333333,0.0392156862,1]`-
 The font is `retitled_titles:fancy` because yes, and text is `"\u0001 retitled titles.  \u0002"` how was mentioned previously.
 
 Putting it all together we have the thing from the logo:  
-`title @a title {"text": "\u0001 retitled titles.  \u0002", "color": "#258800", "font": "retitled_titles:fancy", "shadow_color": 4280649738}`, Which in-game looks like this:
+`title @a title {"text": "\u0001 retitled titles.  \u0002", "color": "#258800", "font": "retitled_titles:fancy", "shadow_color": [0.27058823529,0.53333333333,0.0392156862,1]}`, Which in-game looks like this:
 
 ![showcase/logo](showcase/logo.mp4)
 
