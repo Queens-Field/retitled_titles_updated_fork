@@ -1,16 +1,12 @@
-#version 150
+#version 330
 
 #moj_import <minecraft:fog.glsl>
+#moj_import <minecraft:dynamictransforms.glsl>
 #moj_import <retitled_titles:utils.glsl>
 
 uniform sampler2D Sampler0;
 
-uniform vec4 ColorModulator;
-uniform float FogStart;
-uniform float FogEnd;
-uniform vec4 FogColor;
 uniform float GameTime;
-
 
 const vec3[] GRADIENTS = vec3[](
     #moj_import <retitled_titles:gradients.glsl>
@@ -22,7 +18,8 @@ float mod_gradient_offset(float _in) {
 }
 
 
-in float vertexDistance;
+in float sphericalVertexDistance;
+in float cylindricalVertexDistance;
 in vec4 vertexColor;
 in vec2 texCoord0;
 flat in int obj_type;
@@ -57,7 +54,9 @@ void main() {
     }
 
     // vanilla text
-    vec4 color = texture_color * vertexColor * ColorModulator;
-    //vec4 color = vertexColor;
-    fragColor = linear_fog(color, vertexDistance, FogStart, FogEnd, FogColor);
+    vec4 color = texture(Sampler0, texCoord0) * vertexColor * ColorModulator;
+    if (color.a < 0.1) {
+        discard;
+    }
+    fragColor = apply_fog(color, sphericalVertexDistance, cylindricalVertexDistance, FogEnvironmentalStart, FogEnvironmentalEnd, FogRenderDistanceStart, FogRenderDistanceEnd, FogColor);
 }
