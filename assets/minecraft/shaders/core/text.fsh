@@ -1,11 +1,16 @@
 #version 330
 
+#if !defined(IS_GUI) && !defined(IS_SEE_THROUGH)
 #moj_import <minecraft:fog.glsl>
-#moj_import <minecraft:dynamictransforms.glsl>
+#elif !defined(IS_SEE_THROUGH)
 #moj_import <retitled_titles:utils.glsl>
+#endif
+
+#moj_import <minecraft:dynamictransforms.glsl>
 
 uniform sampler2D Sampler0;
 
+#if defined(IS_GUI) && !defined(IS_SEE_THROUGH)
 uniform float GameTime;
 
 const vec3[] GRADIENTS = vec3[](
@@ -16,17 +21,39 @@ const vec3[] GRADIENTS = vec3[](
 float mod_gradient_offset(float _in) {
     return _in >= 0.5 ? _in - 0.001 : _in;
 }
+#endif
 
-
+#if !defined(IS_GUI) && !defined(IS_SEE_THROUGH)
 in float sphericalVertexDistance;
 in float cylindricalVertexDistance;
+#elif !defined(IS_SEE_THROUGH)
+flat in int obj_type;
+#endif
+
 in vec4 vertexColor;
 in vec2 texCoord0;
-flat in int obj_type;
 
 out vec4 fragColor;
 
 void main() {
+#ifdef IS_GRAYSCALE
+    vec4 texColor = texture(Sampler0, texCoord0).rrrr;
+#else
+    vec4 texColor = texture(Sampler0, texCoord0);
+#endif
+
+#ifdef IS_SEE_THROUGH
+    vec4 color = texColor * vertexColor;
+#else
+    vec4 color = texColor * vertexColor * ColorModulator;
+#endif
+    if (color.a < 0.1) {
+        discard;
+    }
+
+#ifdef IS_SEE_THROUGH
+    fragColor = color * ColorModulator;
+#elif defined(IS_GUI)
     vec4 texture_color = texture(Sampler0, texCoord0);
     if (texture_color.a < 0.001) {
         discard;
@@ -53,10 +80,8 @@ void main() {
         return;
     }
 
-    // vanilla text
-    vec4 color = texture(Sampler0, texCoord0) * vertexColor * ColorModulator;
-    if (color.a < 0.1) {
-        discard;
-    }
+    fragColor = color;
+#else
     fragColor = apply_fog(color, sphericalVertexDistance, cylindricalVertexDistance, FogEnvironmentalStart, FogEnvironmentalEnd, FogRenderDistanceStart, FogRenderDistanceEnd, FogColor);
+#endif
 }

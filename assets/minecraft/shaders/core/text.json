@@ -1,6 +1,6 @@
 {
-    "vertex": "minecraft:core/rendertype_text",
-    "fragment": "minecraft:core/rendertype_text",
+    "vertex": "minecraft:core/text",
+    "fragment": "minecraft:core/text",
     "attributes": [
         "Position",
         "Color",
