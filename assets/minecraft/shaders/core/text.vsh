@@ -75,7 +75,6 @@ void customTitleAdjustment() {
         gl_Position.xy *= text_scale;
     }
         
-        
     int effect_ID = int(Color.r * 255.0);
     // yes I know, it's kinda messy but we didn't got function pointers in glsl cus gpus are kinda stupod so yeah
     switch (effect_ID) {
@@ -91,7 +90,7 @@ void main() {
     gl_Position = ProjMat * ModelViewMat * vec4(Position, 1.0);
 
 #if defined(IS_GUI) && !defined(IS_SEE_THROUGH) && !defined(IS_GRAYSCALE)
-    bool is_achromatic = approx_match(Color.r, Color.g, 0.01) && approx_match(Color.r, Color.g, 0.01);
+    bool is_achromatic = approx_match(Color.r, Color.g, 0.01) && approx_match(Color.r, Color.b, 0.01);
     if (approx_match(Color.g, 135.0 / 255.0, 0.02) && !is_achromatic) {
         customTitleAdjustment();
         return;
