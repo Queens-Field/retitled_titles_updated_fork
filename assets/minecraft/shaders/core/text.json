@@ -12,7 +12,5 @@
         { "name": "Sampler2" }
     ],
     "uniforms": [
-        { "name": "GameTime", "type": "float", "count": 1, "values": [ 0.0 ] },
-        { "name": "ScreenSize", "type": "float", "count": 2, "values": [ 1.0, 1.0 ] }
     ]
 }

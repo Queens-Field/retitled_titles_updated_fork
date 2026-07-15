@@ -6,6 +6,7 @@
 #elif !defined(IS_SEE_THROUGH)
 #moj_import <retitled_titles:utils.glsl>
 #moj_import <retitled_titles:transition_functions.glsl>
+#moj_import <minecraft:globals.glsl>
 #endif
 
 #moj_import <minecraft:dynamictransforms.glsl>
@@ -20,17 +21,11 @@ in ivec2 UV2;
 
 uniform sampler2D Sampler2;
 
-#if defined(IS_GUI) && !defined(IS_SEE_THROUGH)
-uniform float GameTime;
-uniform vec2 ScreenSize;
-
-flat out int obj_type;
-#endif
-
-
 #if !defined(IS_GUI) && !defined(IS_SEE_THROUGH)
 out float sphericalVertexDistance;
 out float cylindricalVertexDistance;
+#elif !defined(IS_SEE_THROUGH)
+flat out int obj_type;
 #endif
 
 out vec4 vertexColor;
@@ -95,9 +90,9 @@ void customTitleAdjustment() {
 void main() {
     gl_Position = ProjMat * ModelViewMat * vec4(Position, 1.0);
 
-#if defined(IS_GUI) && !defined(IS_SEE_THROUGH) 
-    bool is_monochromatic = ((Color.r - Color.g) == 0.0) && ((Color.b - Color.g) == 0.0);
-    if ( approx_match(Color.g, 135.0 / 255.0, 0.02) && !is_monochromatic ) {
+#if defined(IS_GUI) && !defined(IS_SEE_THROUGH) && !defined(IS_GRAYSCALE)
+    bool is_achromatic = approx_match(Color.r, Color.g, 0.01) && approx_match(Color.r, Color.g, 0.01);
+    if (approx_match(Color.g, 135.0 / 255.0, 0.02) && !is_achromatic) {
         customTitleAdjustment();
         return;
     }

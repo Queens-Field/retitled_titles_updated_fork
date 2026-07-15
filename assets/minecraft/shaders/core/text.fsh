@@ -4,6 +4,7 @@
 #moj_import <minecraft:fog.glsl>
 #elif !defined(IS_SEE_THROUGH)
 #moj_import <retitled_titles:utils.glsl>
+#moj_import <minecraft:globals.glsl>
 #endif
 
 #moj_import <minecraft:dynamictransforms.glsl>
@@ -11,8 +12,6 @@
 uniform sampler2D Sampler0;
 
 #if defined(IS_GUI) && !defined(IS_SEE_THROUGH)
-uniform float GameTime;
-
 const vec3[] GRADIENTS = vec3[](
     #moj_import <retitled_titles:gradients.glsl>
 );
