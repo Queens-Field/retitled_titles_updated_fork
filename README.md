@@ -3,7 +3,7 @@
 
 ## What is this, and what does it do?
 
-This is a shader for Minecraft 1.21.4 (soon™ will be updated to higher versions, feel free to fork this repo), combined with specially created font textures (I included instructions on how to make them in the [how to make a texture](./how_to_make_a_texture.md)), that allows to create title texts with more complex animations than just vanilla alpha linear fade-in and fade-out, and in fact, when using this pack and appropriate text colors for shader to pick up on, the characters don't get more opaque as the title appears, but rather more and more pixels starting to get visible (included a small showcase below).
+This is a shader for Minecraft 26.2 (feel free to fork this repo), combined with specially created font textures (I included instructions on how to make them in the [how to make a texture](./how_to_make_a_texture.md)), that allows to create title texts with more complex animations than just vanilla alpha linear fade-in and fade-out, and in fact, when using this pack and appropriate text colors for shader to pick up on, the characters don't get more opaque as the title appears, but rather more and more pixels starting to get visible (included a small showcase below).
 
 It relies on the titles first increasing in alpha as they fade-in, and then decreasing as they fade-out, in other words:
 1. Transition times of the titles are derived from the `fade-in` and `fade-out` times in the `/title <selector> times <fade-in> <stay> <fade-out>` command.
@@ -87,11 +87,11 @@ For the text lets be absolutely unbiased and pick "retitled titles." alongside w
 ### Combining
 
 So, here we have it:  
-Text color is `#258800` (all previosuly brought up `25`, `88`, `00` but without the `0x` part as obviously HEX codes are written in HEX and there is no need to indicate it any further), and Text shadow color is `0xFF25880A`, but we need to convert it to RGBA fractions so it's `[0.27058823529,0.53333333333,0.0392156862,1]`-
+Text color is `#258800` (all previosuly brought up `25`, `88`, `00` but without the `0x` part as obviously HEX codes are written in HEX and there is no need to indicate it any further), and Text shadow color is `0xFF25880A`, but we need to convert it to RGBA fractions so it's `[0.14509803921,0.53333333333,0.0392156862,1]`-
 The font is `retitled_titles:fancy` because yes, and text is `"\u0001 retitled titles.  \u0002"` how was mentioned previously.
 
 Putting it all together we have the thing from the logo:  
-`title @a title {"text": "\u0001 retitled titles.  \u0002", "color": "#258800", "font": "retitled_titles:fancy", "shadow_color": [0.27058823529,0.53333333333,0.0392156862,1]}`, Which in-game looks like this:
+`title @a title {"text": "\u0001 retitled titles.  \u0002", "color": "#258800", "font": "retitled_titles:fancy", "shadow_color": [0.14509803921,0.53333333333,0.0392156862,1]}`, Which in-game looks like this:
 
 ![showcase/logo](showcase/logo.mp4)
 
