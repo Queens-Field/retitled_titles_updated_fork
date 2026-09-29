@@ -1,4 +1,3 @@
-#version 330
 
 bool approx_match(float first, float second, float threshold) {
     return abs(first - second) <= threshold;

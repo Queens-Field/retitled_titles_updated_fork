@@ -3,7 +3,7 @@
 
 ## What is this, and what does it do?
 
-This is a shader for Minecraft 26.2 (feel free to fork this repo), combined with specially created font textures (I included instructions on how to make them in the [how to make a texture](./how_to_make_a_texture.md)), that allows to create title texts with more complex animations than just vanilla alpha linear fade-in and fade-out, and in fact, when using this pack and appropriate text colors for shader to pick up on, the characters don't get more opaque as the title appears, but rather more and more pixels starting to get visible (included a small showcase below).
+This is a shader for Minecraft 26.3 (feel free to fork this repo), combined with specially created font textures (I included instructions on how to make them in the [how to make a texture](./how_to_make_a_texture.md)), that allows to create title texts with more complex animations than just vanilla alpha linear fade-in and fade-out, and in fact, when using this pack and appropriate text colors for shader to pick up on, the characters don't get more opaque as the title appears, but rather more and more pixels starting to get visible (included a small showcase below).
 
 It relies on the titles first increasing in alpha as they fade-in, and then decreasing as they fade-out, in other words:
 1. Transition times of the titles are derived from the `fade-in` and `fade-out` times in the `/title <selector> times <fade-in> <stay> <fade-out>` command.

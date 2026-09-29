@@ -1,35 +1,35 @@
 #version 330
+#extension GL_ARB_separate_shader_objects : require
 
 #if !defined(IS_GUI) && !defined(IS_SEE_THROUGH)
-#moj_import <minecraft:fog.glsl>
-#moj_import <minecraft:sample_lightmap.glsl>
+#include <minecraft:fog.glsl>
+#include <minecraft:sample_lightmap.glsl>
 #elif !defined(IS_SEE_THROUGH)
-#moj_import <retitled_titles:utils.glsl>
-#moj_import <retitled_titles:transition_functions.glsl>
-#moj_import <minecraft:globals.glsl>
+#include <retitled_titles:utils.glsl>
+#include <retitled_titles:transition_functions.glsl>
+#include <minecraft:globals.glsl>
 #endif
 
-#moj_import <minecraft:dynamictransforms.glsl>
-#moj_import <minecraft:projection.glsl>
+#include <minecraft:dynamictransforms.glsl>
+#include <minecraft:projection.glsl>
 
-in vec3 Position;
-in vec4 Color;
-in vec2 UV0;
+layout(location = 0) in vec3 Position;
+layout(location = 1) in vec4 Color;
+layout(location = 2) in vec2 UV0;
 #if !defined(IS_GUI) && !defined(IS_SEE_THROUGH)
-in ivec2 UV2;
+layout(location = 3) in ivec2 UV2;
 #endif
 
+#if !defined(IS_GUI) && !defined(IS_SEE_THROUGH)
 uniform sampler2D Sampler2;
-
-#if !defined(IS_GUI) && !defined(IS_SEE_THROUGH)
-out float sphericalVertexDistance;
-out float cylindricalVertexDistance;
+layout(location = 0) out float sphericalVertexDistance;
+layout(location = 1) out float cylindricalVertexDistance;
 #elif !defined(IS_SEE_THROUGH)
-flat out int obj_type;
+layout(location = 4) flat out int obj_type;
 #endif
 
-out vec4 vertexColor;
-out vec2 texCoord0;
+layout(location = 2) out vec4 vertexColor;
+layout(location = 3) out vec2 texCoord0;
 
 #if defined(IS_GUI) && !defined(IS_SEE_THROUGH)
 void customTitleAdjustment() {
@@ -78,7 +78,7 @@ void customTitleAdjustment() {
     int effect_ID = int(Color.r * 255.0);
     // yes I know, it's kinda messy but we didn't got function pointers in glsl cus gpus are kinda stupod so yeah
     switch (effect_ID) {
-        #moj_import <retitled_titles:configured_transitions.glsl>
+        #include <retitled_titles:configured_transitions.glsl>
     }
 
     obj_type = 16; // title text
